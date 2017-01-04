@@ -9,11 +9,16 @@
 import Foundation
 import UIKit
 
+protocol ReorderableCollectionViewDelegate {
+    func topCollectionDidSelectItemAt(_ indexPath: IndexPath)
+}
+
 class ReorderableCollectionView: UIView {
     
     var bottomCollection: UICollectionView!
     var topCollection: TouchTransparentCollectionView!
     let dataSource = ReorderableCollectionViewDataSource()
+    var delegate: ReorderableCollectionViewDelegate?
     
     var longPressGesture: UILongPressGestureRecognizer!
     
@@ -27,14 +32,18 @@ class ReorderableCollectionView: UIView {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        setDataSourceDelegate()
+        prepareBottomCollection()
+        prepareTopCollection()
+        prepareLongGesture()
     }
     
-    func setDataSourceDelegate() {
+    internal func setDataSourceDelegate() {
         dataSource.delegate = self
     }
     
-    func prepareBottomCollection() {
+    internal func prepareBottomCollection() {
         let layout = UICollectionViewFlowLayout()
         
         
@@ -47,7 +56,7 @@ class ReorderableCollectionView: UIView {
         addSubview(bottomCollection)
     }
     
-    func prepareTopCollection() {
+    internal func prepareTopCollection() {
         let layout = TopCollectionFlowLayout(bottomCollectionFlowLayout: bottomCollection.collectionViewLayout as! UICollectionViewFlowLayout)
         
         
@@ -61,7 +70,7 @@ class ReorderableCollectionView: UIView {
         addSubview(topCollection)
     }
     
-    func prepareLongGesture() {
+    internal func prepareLongGesture() {
         let longPressGesture =  UILongPressGestureRecognizer(target: self, action: #selector(handleLongGesture(gesture:)))
         topCollection.addGestureRecognizer(longPressGesture)
     }
@@ -71,17 +80,17 @@ class ReorderableCollectionView: UIView {
         layoutTopCollection()
     }
     
-    func layoutBottomCollection() {
+    internal func layoutBottomCollection() {
         bottomCollection.frame = bounds
     }
     
-    func layoutTopCollection() {
+    internal func layoutTopCollection() {
         topCollection.frame = bounds
     }
     
 
     
-    func handleLongGesture(gesture: UILongPressGestureRecognizer) {
+    internal func handleLongGesture(gesture: UILongPressGestureRecognizer) {
         
         switch(gesture.state) {
             
@@ -99,9 +108,41 @@ class ReorderableCollectionView: UIView {
         }
     }
     
+    func addItems(items: [UIColor]) {
+        dataSource.topDataSource.add(items)
+        topCollection.performBatchUpdates({
+            for _ in items {
+                self.topCollection.insertItems(at: [IndexPath(row: 0, section: 0)])
+            }
+        }, completion: nil)
+        bottomCollection.performBatchUpdates({
+            for _ in items {
+                self.bottomCollection.insertItems(at: [IndexPath(row: 0, section: 0)])
+            }
+        }, completion: nil)
+        //topCollection.reloadData()
+        //bottomCollection.reloadData()
+    }
+    
+    func removeItemAt(_ indexPath: IndexPath) {
+        dataSource.topDataSource.removeItemAt(indexPath)
+        topCollection.performBatchUpdates({
+            self.topCollection.deleteItems(at: [indexPath])
+        }, completion: nil)
+        bottomCollection.performBatchUpdates({
+            self.bottomCollection.deleteItems(at: [indexPath])
+        }, completion: nil)
+    }
+    
 }
 
 extension ReorderableCollectionView: ReforderableCollectionViewDataSourceDelegate {
+    
+    func topCollectionDidSelectItemAt(_ indexPath: IndexPath) {
+        if let d = delegate {
+            d.topCollectionDidSelectItemAt(indexPath)
+        }
+    }
     
     func topScrollViewDidScroll(_ scrollView: UIScrollView) {
         bottomCollection.contentOffset = scrollView.contentOffset

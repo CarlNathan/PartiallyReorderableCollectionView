@@ -16,9 +16,9 @@ class BottomCollectionDataSource: NSObject {
 extension BottomCollectionDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let d = delegate {
-            return 100 + d.numberOfItemsInTopCollection()
+            return 20 + d.numberOfItemsInTopCollection()
         }
-        return 100
+        return 20
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -12,9 +12,20 @@ import UIKit
 class TopCollectionDataSource: NSObject {
     
     var delegate: TopDataSourceDelegate?
+    var dataItems = [UIColor.blue, UIColor.green, UIColor.red, UIColor.cyan, UIColor.brown]
     
     func numberOfItems() -> Int {
-        return 4
+        return dataItems.count
+    }
+    
+    func add(_ items: [UIColor]) {
+        for item in items {
+            dataItems.insert(item, at: 0)
+        }
+    }
+    
+    func removeItemAt(_ indexPath: IndexPath) {
+        dataItems.remove(at: indexPath.row)
     }
     
 }
@@ -23,25 +34,13 @@ class TopCollectionDataSource: NSObject {
 extension TopCollectionDataSource: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return dataItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         
-        switch indexPath.item {
-        case 0:
-            cell.backgroundColor = UIColor.red
-            break
-        case 1:
-            cell.backgroundColor = UIColor.green
-            break
-        case 2:
-            cell.backgroundColor = UIColor.purple
-            break
-        default:
-            cell.backgroundColor = UIColor.orange
-        }
+        cell.backgroundColor = dataItems[indexPath.row]
         
         return cell
     }
@@ -57,7 +56,11 @@ extension TopCollectionDataSource: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //
+        
+        if let d = delegate {
+            d.topCollectionDidSelectItemAt(indexPath)
+        }
+        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

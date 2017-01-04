@@ -9,14 +9,17 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    let vw = ReorderableCollectionView()
+    
+    @IBOutlet weak var reoderCollectionView: ReorderableCollectionView!
+    
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        view.addSubview(vw)
+        reoderCollectionView.delegate = self
+        view.addSubview(reoderCollectionView)
+        setupNavButton()
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,10 +27,38 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidLayoutSubviews() {
-        vw.frame = view.bounds
+    func setupNavButton() {
+        let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewItem))
+        navigationItem.rightBarButtonItem = button
+    }
+    
+    func addNewItem() {
+        let colors = [UIColor.darkGray, UIColor.orange]
+        reoderCollectionView.addItems(items: colors)
     }
 
 
+}
+
+extension ViewController: ReorderableCollectionViewDelegate {
+    func topCollectionDidSelectItemAt(_ indexPath: IndexPath) {
+        
+        let alertController = UIAlertController(title: "Delete Image", message: "Would you like to delete the image you selected?", preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
+            //dismiss
+        }
+        alertController.addAction(cancelAction)
+        
+        let OKAction = UIAlertAction(title: "Delete", style: .destructive) { action in
+            self.reoderCollectionView.removeItemAt(indexPath)
+        }
+        alertController.addAction(OKAction)
+        
+        navigationController?.present(alertController, animated: true) {
+            
+        }
+
+    }
 }
 

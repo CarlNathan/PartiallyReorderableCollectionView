@@ -16,11 +16,13 @@ protocol BottomDataSourceDelegate: UICollectionViewDelegate {
 
 protocol TopDataSourceDelegate {
     func topScrollViewDidScroll(_ scrollView: UIScrollView)
+    func topCollectionDidSelectItemAt(_ indexPath: IndexPath)
 }
 
 protocol ReforderableCollectionViewDataSourceDelegate {
     func topScrollViewDidScroll(_ scrollView: UIScrollView)
     func bottomScrollViewDidScroll(_ scrollView: UIScrollView)
+    func topCollectionDidSelectItemAt(_ indexPath: IndexPath)
 }
 
 class ReorderableCollectionViewDataSource: NSObject {
@@ -50,6 +52,12 @@ extension ReorderableCollectionViewDataSource: BottomDataSourceDelegate {
 }
 
 extension ReorderableCollectionViewDataSource: TopDataSourceDelegate {
+    
+    func topCollectionDidSelectItemAt(_ indexPath: IndexPath) {
+        if let d = delegate {
+            d.topCollectionDidSelectItemAt(indexPath)
+        }
+    }
     
     func topScrollViewDidScroll(_ scrollView: UIScrollView) {
         if let d = delegate {

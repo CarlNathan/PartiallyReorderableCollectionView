@@ -11,6 +11,9 @@ import UIKit
 
 class TouchTransparentCollectionView: UICollectionView {
     
+    // To enable didSelectIndexPath on bottom collectionView, uncomment this method.
+    
+    /*
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         if indexPathForItem(at: point) == nil {
             return false
@@ -18,5 +21,6 @@ class TouchTransparentCollectionView: UICollectionView {
             return true
         }
     }
+ */
     
 }
