@@ -24,8 +24,12 @@ class TopCollectionDataSource: NSObject {
         }
     }
     
-    func removeItemAt(_ indexPath: IndexPath) {
-        dataItems.remove(at: indexPath.row)
+    func removeItemsAt(_ indexPaths: [IndexPath]) {
+        var indicesToBeRemoved = Set<Int>()
+        for indexPath in indexPaths {
+            indicesToBeRemoved.update(with: indexPath.row)
+        }
+        dataItems = dataItems.enumerated().filter({ !indicesToBeRemoved.contains($0.offset) }).map { $0.element }
     }
     
 }

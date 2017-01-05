@@ -51,7 +51,7 @@ extension ViewController: ReorderableCollectionViewDelegate {
         alertController.addAction(cancelAction)
         
         let OKAction = UIAlertAction(title: "Delete", style: .destructive) { action in
-            self.reoderCollectionView.removeItemAt(indexPath)
+            self.reoderCollectionView.removeItemsAt([indexPath])
         }
         alertController.addAction(OKAction)
         

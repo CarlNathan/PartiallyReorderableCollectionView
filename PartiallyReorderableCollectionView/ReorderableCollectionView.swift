@@ -124,13 +124,13 @@ class ReorderableCollectionView: UIView {
         //bottomCollection.reloadData()
     }
     
-    func removeItemAt(_ indexPath: IndexPath) {
-        dataSource.topDataSource.removeItemAt(indexPath)
+    func removeItemsAt(_ indexPaths: [IndexPath]) {
+        dataSource.topDataSource.removeItemsAt(indexPaths)
         topCollection.performBatchUpdates({
-            self.topCollection.deleteItems(at: [indexPath])
+            self.topCollection.deleteItems(at: indexPaths)
         }, completion: nil)
         bottomCollection.performBatchUpdates({
-            self.bottomCollection.deleteItems(at: [indexPath])
+            self.bottomCollection.deleteItems(at: indexPaths)
         }, completion: nil)
     }
     
