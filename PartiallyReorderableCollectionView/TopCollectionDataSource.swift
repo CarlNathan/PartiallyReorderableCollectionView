@@ -11,20 +11,25 @@ import UIKit
 
 class TopCollectionDataSource: NSObject {
     
-    var delegate: TopDataSourceDelegate?
-    var dataItems = [UIColor.blue, UIColor.green, UIColor.red, UIColor.cyan, UIColor.brown]
+    //MARK: Properties
     
-    func numberOfItems() -> Int {
+    public var delegate: TopDataSourceDelegate?
+    public var dataItems = [UIColor.blue, UIColor.green, UIColor.red, UIColor.cyan, UIColor.brown]
+    
+    public func numberOfItems() -> Int {
         return dataItems.count
     }
     
-    func add(_ items: [UIColor]) {
+    //MARK: Add/Remove Items
+    
+    //FIXME: Integrate change data type
+    public func add(_ items: [UIColor]) {
         for item in items {
             dataItems.insert(item, at: 0)
         }
     }
     
-    func removeItemsAt(_ indexPaths: [IndexPath]) {
+    public func removeItemsAt(_ indexPaths: [IndexPath]) {
         var indicesToBeRemoved = Set<Int>()
         for indexPath in indexPaths {
             indicesToBeRemoved.update(with: indexPath.row)
@@ -36,6 +41,7 @@ class TopCollectionDataSource: NSObject {
 
 
 extension TopCollectionDataSource: UICollectionViewDataSource {
+    //MARK: CollectionView DataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataItems.count
@@ -43,28 +49,26 @@ extension TopCollectionDataSource: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        
         cell.backgroundColor = dataItems[indexPath.row]
-        
         return cell
     }
 }
 
 extension TopCollectionDataSource: UICollectionViewDelegate {
+    //MARK: CollectionView Delegate
+
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         return true
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        //change data
+        //FIXME: Update data on reordering
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         if let d = delegate {
             d.topCollectionDidSelectItemAt(indexPath)
         }
-        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -72,10 +76,11 @@ extension TopCollectionDataSource: UICollectionViewDelegate {
             d.topScrollViewDidScroll(scrollView)
         }
     }
-    
 }
 
 extension TopCollectionDataSource: UICollectionViewDelegateFlowLayout {
+    //MARK: Flow Layout Delegate
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.width / 3 - 1, height: collectionView.bounds.width / 3 - 1)
     }

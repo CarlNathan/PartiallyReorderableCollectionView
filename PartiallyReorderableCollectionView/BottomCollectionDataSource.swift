@@ -10,10 +10,14 @@ import Foundation
 import UIKit
 
 class BottomCollectionDataSource: NSObject {
-    var delegate: BottomDataSourceDelegate?
+    //MARK: Properties
+    public var delegate: BottomDataSourceDelegate?
+
 }
 
 extension BottomCollectionDataSource: UICollectionViewDataSource {
+    //MARK: Collection View Data Source
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let d = delegate {
             return 20 + d.numberOfItemsInTopCollection()
@@ -46,20 +50,10 @@ extension BottomCollectionDataSource: UICollectionViewDataSource {
     }
 }
 
-extension BottomCollectionDataSource: UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if let d = delegate {
-            d.bottomScrollViewDidScroll(scrollView)
-        }
-    }
-}
 
 extension BottomCollectionDataSource: UICollectionViewDelegateFlowLayout {
+    //MARK: Flow Layout Delegate
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.width / 3 - 1, height: collectionView.bounds.width / 3 - 1)
     }

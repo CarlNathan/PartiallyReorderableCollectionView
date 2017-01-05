@@ -14,15 +14,15 @@ protocol ReorderableCollectionViewDelegate {
 }
 
 class ReorderableCollectionView: UIView {
+    //MARK: Properties
+    internal var bottomCollection: UICollectionView!
+    internal var topCollection: UICollectionView!
+    internal let dataSource = ReorderableCollectionViewDataSource()
+    public var delegate: ReorderableCollectionViewDelegate?
     
-    var bottomCollection: UICollectionView!
-    var topCollection: TouchTransparentCollectionView!
-    let dataSource = ReorderableCollectionViewDataSource()
-    var delegate: ReorderableCollectionViewDelegate?
+    internal var longPressGesture: UILongPressGestureRecognizer!
     
-    var longPressGesture: UILongPressGestureRecognizer!
-    
-    
+    //MARK: Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         setDataSourceDelegate()
@@ -52,6 +52,7 @@ class ReorderableCollectionView: UIView {
         bottomCollection.dataSource = dataSource.bottomDataSource
         bottomCollection.delegate = dataSource.bottomDataSource
         bottomCollection.backgroundColor = UIColor.white
+        bottomCollection.contentOffset = CGPoint(x: 0, y: 0)
         
         addSubview(bottomCollection)
     }
@@ -60,7 +61,7 @@ class ReorderableCollectionView: UIView {
         let layout = TopCollectionFlowLayout(bottomCollectionFlowLayout: bottomCollection.collectionViewLayout as! UICollectionViewFlowLayout)
         
         
-        topCollection = TouchTransparentCollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        topCollection = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         topCollection.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         topCollection.dataSource = dataSource.topDataSource
         topCollection.delegate = dataSource.topDataSource
@@ -74,7 +75,7 @@ class ReorderableCollectionView: UIView {
         let longPressGesture =  UILongPressGestureRecognizer(target: self, action: #selector(handleLongGesture(gesture:)))
         topCollection.addGestureRecognizer(longPressGesture)
     }
-    
+    //MARK: Layout
     override func layoutSubviews() {
         layoutBottomCollection()
         layoutTopCollection()
@@ -89,7 +90,7 @@ class ReorderableCollectionView: UIView {
     }
     
 
-    
+    //MARK: Reorder Gesture Handling
     internal func handleLongGesture(gesture: UILongPressGestureRecognizer) {
         
         switch(gesture.state) {
@@ -107,8 +108,9 @@ class ReorderableCollectionView: UIView {
             topCollection.cancelInteractiveMovement()
         }
     }
-    
-    func addItems(items: [UIColor]) {
+    //MARK: Add/Remove Items
+    //FIXME: Implementation - Change Data Type
+    public func addItems(items: [UIColor]) {
         dataSource.topDataSource.add(items)
         topCollection.performBatchUpdates({
             for _ in items {
@@ -124,7 +126,7 @@ class ReorderableCollectionView: UIView {
         //bottomCollection.reloadData()
     }
     
-    func removeItemsAt(_ indexPaths: [IndexPath]) {
+    public func removeItemsAt(_ indexPaths: [IndexPath]) {
         dataSource.topDataSource.removeItemsAt(indexPaths)
         topCollection.performBatchUpdates({
             self.topCollection.deleteItems(at: indexPaths)
@@ -136,8 +138,8 @@ class ReorderableCollectionView: UIView {
     
 }
 
-extension ReorderableCollectionView: ReforderableCollectionViewDataSourceDelegate {
-    
+extension ReorderableCollectionView: ReorderableCollectionViewDataSourceDelegate {
+    //MARK: Reorderable DataSource Delegate
     func topCollectionDidSelectItemAt(_ indexPath: IndexPath) {
         if let d = delegate {
             d.topCollectionDidSelectItemAt(indexPath)
@@ -146,9 +148,5 @@ extension ReorderableCollectionView: ReforderableCollectionViewDataSourceDelegat
     
     func topScrollViewDidScroll(_ scrollView: UIScrollView) {
         bottomCollection.contentOffset = scrollView.contentOffset
-    }
-    
-    func bottomScrollViewDidScroll(_ scrollView: UIScrollView) {
-        topCollection.contentOffset = scrollView.contentOffset
     }
 }

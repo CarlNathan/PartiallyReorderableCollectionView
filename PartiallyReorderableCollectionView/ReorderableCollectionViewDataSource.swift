@@ -11,7 +11,6 @@ import UIKit
 
 protocol BottomDataSourceDelegate: UICollectionViewDelegate {
     func numberOfItemsInTopCollection() -> Int
-    func bottomScrollViewDidScroll(_ scrollView: UIScrollView)
 }
 
 protocol TopDataSourceDelegate {
@@ -19,18 +18,17 @@ protocol TopDataSourceDelegate {
     func topCollectionDidSelectItemAt(_ indexPath: IndexPath)
 }
 
-protocol ReforderableCollectionViewDataSourceDelegate {
+protocol ReorderableCollectionViewDataSourceDelegate {
     func topScrollViewDidScroll(_ scrollView: UIScrollView)
-    func bottomScrollViewDidScroll(_ scrollView: UIScrollView)
     func topCollectionDidSelectItemAt(_ indexPath: IndexPath)
 }
 
 class ReorderableCollectionViewDataSource: NSObject {
-    
-    let topDataSource = TopCollectionDataSource()
-    let bottomDataSource = BottomCollectionDataSource()
-    var delegate: ReforderableCollectionViewDataSourceDelegate?
-    
+    //MARK: Properties
+    internal let topDataSource = TopCollectionDataSource()
+    internal let bottomDataSource = BottomCollectionDataSource()
+    public var delegate: ReorderableCollectionViewDataSourceDelegate?
+    //Mark: Initialization
     override init() {
         super.init()
         topDataSource.delegate = self
@@ -40,19 +38,14 @@ class ReorderableCollectionViewDataSource: NSObject {
 }
 
 extension ReorderableCollectionViewDataSource: BottomDataSourceDelegate {
-    internal func numberOfItemsInTopCollection() -> Int {
+    //MARK: Bottom Collection Data Delegate
+    func numberOfItemsInTopCollection() -> Int {
         return topDataSource.numberOfItems()
-    }
-    
-    func bottomScrollViewDidScroll(_ scrollView: UIScrollView) {
-        if let d = delegate {
-            d.bottomScrollViewDidScroll(scrollView)
-        }
     }
 }
 
 extension ReorderableCollectionViewDataSource: TopDataSourceDelegate {
-    
+    //MARK: Top Collection Data Delegate
     func topCollectionDidSelectItemAt(_ indexPath: IndexPath) {
         if let d = delegate {
             d.topCollectionDidSelectItemAt(indexPath)

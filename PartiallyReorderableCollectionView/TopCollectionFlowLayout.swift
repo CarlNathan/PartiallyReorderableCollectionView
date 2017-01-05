@@ -11,7 +11,7 @@ import UIKit
 
 class TopCollectionFlowLayout: UICollectionViewFlowLayout {
     
-    let bottomCollectionLayout: UICollectionViewFlowLayout
+    internal let bottomCollectionLayout: UICollectionViewFlowLayout
     
     init(bottomCollectionFlowLayout: UICollectionViewFlowLayout) {
         self.bottomCollectionLayout = bottomCollectionFlowLayout

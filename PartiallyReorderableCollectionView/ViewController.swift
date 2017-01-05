@@ -10,21 +10,20 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var reoderCollectionView: ReorderableCollectionView!
     
+    let reorderCollectionView = ReorderableCollectionView()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        reoderCollectionView.delegate = self
-        view.addSubview(reoderCollectionView)
+        reorderCollectionView.delegate = self
+        view.addSubview(reorderCollectionView)
         setupNavButton()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewDidLayoutSubviews() {
+        reorderCollectionView.frame = CGRect(x: 0, y: 64, width: view.bounds.width, height: view.bounds.height - 64)
     }
     
     func setupNavButton() {
@@ -34,7 +33,7 @@ class ViewController: UIViewController {
     
     func addNewItem() {
         let colors = [UIColor.darkGray, UIColor.orange]
-        reoderCollectionView.addItems(items: colors)
+        reorderCollectionView.addItems(items: colors)
     }
 
 
@@ -51,7 +50,7 @@ extension ViewController: ReorderableCollectionViewDelegate {
         alertController.addAction(cancelAction)
         
         let OKAction = UIAlertAction(title: "Delete", style: .destructive) { action in
-            self.reoderCollectionView.removeItemsAt([indexPath])
+            self.reorderCollectionView.removeItemsAt([indexPath])
         }
         alertController.addAction(OKAction)
         

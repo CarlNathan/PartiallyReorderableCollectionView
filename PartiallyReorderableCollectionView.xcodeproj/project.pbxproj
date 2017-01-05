@@ -17,7 +17,6 @@
 		ED79AF6C1E1CBB5F00142009 /* BottomCollectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED79AF6B1E1CBB5F00142009 /* BottomCollectionDataSource.swift */; };
 		ED79AF6E1E1CBD6F00142009 /* ReorderableCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED79AF6D1E1CBD6F00142009 /* ReorderableCollectionViewDataSource.swift */; };
 		ED79AF701E1D63B800142009 /* TopCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED79AF6F1E1D63B800142009 /* TopCollectionFlowLayout.swift */; };
-		ED79AF721E1D75D800142009 /* TouchTransparentCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED79AF711E1D75D800142009 /* TouchTransparentCollectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +32,6 @@
 		ED79AF6B1E1CBB5F00142009 /* BottomCollectionDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomCollectionDataSource.swift; sourceTree = "<group>"; };
 		ED79AF6D1E1CBD6F00142009 /* ReorderableCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReorderableCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		ED79AF6F1E1D63B800142009 /* TopCollectionFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopCollectionFlowLayout.swift; sourceTree = "<group>"; };
-		ED79AF711E1D75D800142009 /* TouchTransparentCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchTransparentCollectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +71,6 @@
 				ED79AF691E1CAC9A00142009 /* TopCollectionDataSource.swift */,
 				ED79AF6B1E1CBB5F00142009 /* BottomCollectionDataSource.swift */,
 				ED79AF6F1E1D63B800142009 /* TopCollectionFlowLayout.swift */,
-				ED79AF711E1D75D800142009 /* TouchTransparentCollectionView.swift */,
 				ED79AF571E1C982E00142009 /* Main.storyboard */,
 				ED79AF5A1E1C982E00142009 /* Assets.xcassets */,
 				ED79AF5C1E1C982E00142009 /* LaunchScreen.storyboard */,
@@ -158,7 +155,6 @@
 				ED79AF6C1E1CBB5F00142009 /* BottomCollectionDataSource.swift in Sources */,
 				ED79AF661E1CA9B100142009 /* ReorderableCollectionView.swift in Sources */,
 				ED79AF701E1D63B800142009 /* TopCollectionFlowLayout.swift in Sources */,
-				ED79AF721E1D75D800142009 /* TouchTransparentCollectionView.swift in Sources */,
 				ED79AF561E1C982E00142009 /* ViewController.swift in Sources */,
 				ED79AF6E1E1CBD6F00142009 /* ReorderableCollectionViewDataSource.swift in Sources */,
 				ED79AF6A1E1CAC9A00142009 /* TopCollectionDataSource.swift in Sources */,
@@ -324,6 +320,7 @@
 				ED79AF641E1C982E00142009 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
