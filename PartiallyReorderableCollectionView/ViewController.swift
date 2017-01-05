@@ -18,6 +18,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         reorderCollectionView.delegate = self
+        self.automaticallyAdjustsScrollViewInsets = false
         view.addSubview(reorderCollectionView)
         setupNavButton()
     }
@@ -35,7 +36,6 @@ class ViewController: UIViewController {
         let colors = [UIColor.darkGray, UIColor.orange]
         reorderCollectionView.addItems(items: colors)
     }
-
 
 }
 

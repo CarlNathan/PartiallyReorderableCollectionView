@@ -50,7 +50,6 @@ extension BottomCollectionDataSource: UICollectionViewDataSource {
     }
 }
 
-
 extension BottomCollectionDataSource: UICollectionViewDelegateFlowLayout {
     //MARK: Flow Layout Delegate
 

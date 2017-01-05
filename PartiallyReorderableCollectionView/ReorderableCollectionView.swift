@@ -15,9 +15,9 @@ protocol ReorderableCollectionViewDelegate {
 
 class ReorderableCollectionView: UIView {
     //MARK: Properties
-    internal var bottomCollection: UICollectionView!
-    internal var topCollection: UICollectionView!
-    internal let dataSource = ReorderableCollectionViewDataSource()
+    var bottomCollection: UICollectionView!
+    var topCollection: UICollectionView!
+    let dataSource = ReorderableCollectionViewDataSource()
     public var delegate: ReorderableCollectionViewDelegate?
     
     internal var longPressGesture: UILongPressGestureRecognizer!
@@ -52,7 +52,6 @@ class ReorderableCollectionView: UIView {
         bottomCollection.dataSource = dataSource.bottomDataSource
         bottomCollection.delegate = dataSource.bottomDataSource
         bottomCollection.backgroundColor = UIColor.white
-        bottomCollection.contentOffset = CGPoint(x: 0, y: 0)
         
         addSubview(bottomCollection)
     }
@@ -66,7 +65,6 @@ class ReorderableCollectionView: UIView {
         topCollection.dataSource = dataSource.topDataSource
         topCollection.delegate = dataSource.topDataSource
         topCollection.backgroundColor = UIColor.clear
-        
         
         addSubview(topCollection)
     }
@@ -112,18 +110,18 @@ class ReorderableCollectionView: UIView {
     //FIXME: Implementation - Change Data Type
     public func addItems(items: [UIColor]) {
         dataSource.topDataSource.add(items)
+        var indexPaths = [IndexPath]()
+        for i in 0...items.count - 1 {
+            indexPaths.append(IndexPath(row: i, section: 0))
+        }
         topCollection.performBatchUpdates({
-            for _ in items {
-                self.topCollection.insertItems(at: [IndexPath(row: 0, section: 0)])
-            }
+            self.topCollection.insertItems(at: indexPaths)
         }, completion: nil)
         bottomCollection.performBatchUpdates({
             for _ in items {
                 self.bottomCollection.insertItems(at: [IndexPath(row: 0, section: 0)])
             }
         }, completion: nil)
-        //topCollection.reloadData()
-        //bottomCollection.reloadData()
     }
     
     public func removeItemsAt(_ indexPaths: [IndexPath]) {
