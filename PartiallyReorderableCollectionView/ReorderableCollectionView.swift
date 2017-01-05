@@ -17,6 +17,7 @@ class ReorderableCollectionView: UIView {
     //MARK: Properties
     internal var bottomCollection: UICollectionView!
     internal var topCollection: UICollectionView!
+    //FIXME: Probably need to change initialization of data sources to inject data
     public let dataSource = ReorderableCollectionViewDataSource()
     public var delegate: ReorderableCollectionViewDelegate?
     
@@ -48,6 +49,7 @@ class ReorderableCollectionView: UIView {
         
         
         bottomCollection = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        //FIXME: Change cell type if using custom class
         bottomCollection.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         bottomCollection.dataSource = dataSource.bottomDataSource
         bottomCollection.delegate = dataSource.bottomDataSource
@@ -61,6 +63,7 @@ class ReorderableCollectionView: UIView {
         
         
         topCollection = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        //FIXME: Change cell type if using custom class
         topCollection.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         topCollection.dataSource = dataSource.topDataSource
         topCollection.delegate = dataSource.topDataSource

@@ -12,7 +12,8 @@ import UIKit
 class BottomCollectionDataSource: NSObject {
     //MARK: Properties
     public var delegate: BottomDataSourceDelegate?
-
+    //FIXME: Change Data Type
+    let dataItems = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]
 }
 
 extension BottomCollectionDataSource: UICollectionViewDataSource {
@@ -20,20 +21,20 @@ extension BottomCollectionDataSource: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let d = delegate {
-            return 20 + d.numberOfItemsInTopCollection()
+            return dataItems.count + d.numberOfItemsInTopCollection()
         }
-        return 20
+        return dataItems.count
     }
-    
+    //FIXME: Change Cell Layout for different DataType
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        
+        var adjustedIndex = indexPath.row
         if let d = delegate {
+            adjustedIndex = indexPath.row - d.numberOfItemsInTopCollection()
             if indexPath.item < d.numberOfItemsInTopCollection() {
                 cell.backgroundColor = UIColor.clear
             } else {
-                
-                switch indexPath.item % 2 {
+                switch dataItems[adjustedIndex] % 2 {
                 case 0:
                     cell.backgroundColor = UIColor.gray
                     break

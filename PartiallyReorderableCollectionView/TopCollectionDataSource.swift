@@ -14,6 +14,7 @@ class TopCollectionDataSource: NSObject {
     //MARK: Properties
     
     public var delegate: TopDataSourceDelegate?
+    //FIXME: Change DataType
     public var dataItems = [UIColor.blue, UIColor.green, UIColor.red, UIColor.cyan, UIColor.brown]
     
     public func numberOfItems() -> Int {
@@ -46,7 +47,7 @@ extension TopCollectionDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataItems.count
     }
-    
+    //FIXME: Change Cell setup for new data Type
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         cell.backgroundColor = dataItems[indexPath.row]
