@@ -15,9 +15,9 @@ protocol ReorderableCollectionViewDelegate {
 
 class ReorderableCollectionView: UIView {
     //MARK: Properties
-    var bottomCollection: UICollectionView!
-    var topCollection: UICollectionView!
-    let dataSource = ReorderableCollectionViewDataSource()
+    internal var bottomCollection: UICollectionView!
+    internal var topCollection: UICollectionView!
+    public let dataSource = ReorderableCollectionViewDataSource()
     public var delegate: ReorderableCollectionViewDelegate?
     
     internal var longPressGesture: UILongPressGestureRecognizer!
